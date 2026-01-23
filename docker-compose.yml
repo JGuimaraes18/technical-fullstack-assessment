@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: db_postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  backend:
+    build:
+      context: ./backend
+    dns:
+    - 8.8.8.8
+    - 8.8.4.4    
+    container_name: backend_django
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+    ports:
+      - "${BACKEND_PORT}:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend_angular
+    env_file:
+      - .env
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "${FRONTEND_PORT}:4200"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
