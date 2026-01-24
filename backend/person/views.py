@@ -5,6 +5,7 @@ from rest_framework import status
 
 from .serializers import PersonDTO
 from .services import PersonService
+from .models import Person
 
 # Create your views here.
 
@@ -34,9 +35,9 @@ class PersonController(APIView):
 
 class PersonIdealWeightController(APIView):
 
-    def get(self, request, person_id):
+    def get(self, request, pk):
         try:
-            person = Person.objects.get(id=person_id)
+            person = Person.objects.get(pk=pk)
         except Person.DoesNotExist:
             return Response({"error": "Pessoa não encontrada!"}, status=status.HTTP_404_NOT_FOUND)
 
