@@ -1,4 +1,4 @@
-version: "3.9"
+# version: "3.9"
 
 services:
   db:
@@ -18,10 +18,7 @@ services:
 
   backend:
     build:
-      context: ./backend
-    dns:
-    - 8.8.8.8
-    - 8.8.4.4    
+      context: ./backend  
     container_name: backend_django
     env_file:
       - .env
