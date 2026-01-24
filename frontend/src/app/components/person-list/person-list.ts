@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { PersonService } from '../../services/person.service';
 import { Person } from '../../models/person.model';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './person-list.html',  
   styleUrls: ['./person-list.css']
 })
 export class PersonList implements OnInit {
 
   people: Person[] = [];
+  allPeople: Person[] = [];
+  searchTerm: string = ''; 
 
   constructor(
     private personService: PersonService,
@@ -28,7 +31,16 @@ export class PersonList implements OnInit {
     this.personService.list().subscribe(data => {
       console.log('DATA:', data, Array.isArray(data)); 
       this.people = data;
+      this.allPeople = data;
     });
+  }
+
+  search() {
+    const term = this.searchTerm.toLowerCase();
+    this.people = this.allPeople.filter(p =>
+      p.nome.toLowerCase().includes(term) ||
+      p.cpf.includes(term) 
+    );
   }
 
   showIdealWeight(id: number) {
