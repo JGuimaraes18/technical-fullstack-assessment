@@ -1,4 +1,5 @@
-
+   
+  
 <div class="page">
   <div class="header">
     <h2>Pessoas</h2>
@@ -12,6 +13,10 @@
       <tr>
         <th>Nome</th>
         <th>CPF</th>
+        <th>Nascimento</th>
+        <th>Altura (m)</th>
+        <th>Peso (kg)</th>
+        <th>Sexo</th>
         <th>Ações</th>
       </tr>
     </thead>
@@ -20,6 +25,10 @@
       <tr *ngFor="let p of people">
         <td>{{ p.nome }}</td>
         <td>{{ p.cpf }}</td>
+        <td>{{ p.data_nascimento }}</td>
+        <td>{{ p.altura }}</td>
+        <td>{{ p.peso }}</td>
+        <td>{{ p.sexo }}</td>
         <td class="actions">
           <button class="btn-info" (click)="showIdealWeight(p.id!)">
             Peso ideal
