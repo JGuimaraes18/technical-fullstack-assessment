@@ -41,6 +41,8 @@ export class PersonForm {
   }
 
   submit() {
+    this.person.cpf = this.person.cpf.replace(/\D/g, '');
+    
     if (this.id) {
       this.personService.update(this.id, this.person).subscribe(() => {
         alert('Pessoa atualizada!');
