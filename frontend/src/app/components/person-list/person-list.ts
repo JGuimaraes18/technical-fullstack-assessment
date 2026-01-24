@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { PersonService } from '../../services/person.service';
@@ -8,7 +8,8 @@ import { Person } from '../../models/person.model';
   selector: 'app-person-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './person-list.html'
+  templateUrl: './person-list.html',  
+  styleUrls: ['./person-list.css']
 })
 export class PersonList implements OnInit {
 
@@ -25,6 +26,7 @@ export class PersonList implements OnInit {
 
   load() {
     this.personService.list().subscribe(data => {
+      console.log('DATA:', data, Array.isArray(data)); 
       this.people = data;
     });
   }

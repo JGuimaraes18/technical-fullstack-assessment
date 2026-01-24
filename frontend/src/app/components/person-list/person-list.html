@@ -1,32 +1,39 @@
-<div style="display: flex; justify-content: space-between; align-items: center;">
-  <h2>Pessoas</h2>
-  <a routerLink="/novo">
-    <button routerLink="/novo">
-        Nova Pessoa
-    </button>
-  </a>
+
+<div class="page">
+  <div class="header">
+    <h2>Pessoas</h2>
+    <a routerLink="/novo">
+      <button class="btn-primary">Nova Pessoa</button>
+    </a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of people">
+        <td>{{ p.nome }}</td>
+        <td>{{ p.cpf }}</td>
+        <td class="actions">
+          <button class="btn-info" (click)="showIdealWeight(p.id!)">
+            Peso ideal
+          </button>
+
+          <button class="btn-warning" (click)="edit(p.id!)">
+            Editar
+          </button>
+
+          <button class="btn-danger" (click)="delete(p.id!)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-<table border="1" width="100%">
-  <tr>
-    <th>Nome</th>
-    <th>CPF</th>
-    <th>Ações</th>
-  </tr>
-
-  <tr *ngFor="let p of people">
-    <td>{{ p.nome }}</td>
-    <td>{{ p.cpf }}</td>
-    <td>
-      <button (click)="showIdealWeight(p.id!)">
-        Peso ideal
-      </button>
-
-      <button (click)="edit(p.id!)">
-        Editar
-      </button>
-
-      <button (click)="delete(p.id!)">Excluir</button>
-    </td>
-  </tr>
-</table>

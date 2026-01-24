@@ -1,9 +1,10 @@
 export interface Person {
   id?: number;
   nome: string;
-  data_nascimento: string;
   cpf: string;
-  sexo: 'M' | 'F';
+  sexo: string;
   altura: number;
   peso: number;
+  peso_ideal?: number;
+  data_nascimento?: string;
 }

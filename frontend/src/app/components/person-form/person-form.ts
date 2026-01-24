@@ -9,7 +9,8 @@ import { Person } from '../../models/person.model';
   selector: 'app-person-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './person-form.html'
+  templateUrl: './person-form.html',
+  styleUrl: './person-form.css'
 })
 export class PersonForm {
 
@@ -41,6 +42,7 @@ export class PersonForm {
   }
 
   submit() {
+    // Remove caracteres não numéricos do CPF
     this.person.cpf = this.person.cpf.replace(/\D/g, '');
     
     if (this.id) {
@@ -54,5 +56,9 @@ export class PersonForm {
         this.router.navigate(['/']);
       });
     }
+  }
+
+  cancel() {
+    this.router.navigate(['/']);
   }
 }

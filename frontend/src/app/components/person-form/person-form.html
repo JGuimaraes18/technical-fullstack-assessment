@@ -1,66 +1,33 @@
-<h2>Nova Pessoa</h2>
+<div class="page">
+  <div class="header">
+    <h2>{{ id ? 'Editar Pessoa' : 'Nova Pessoa' }}</h2>
+  </div>
 
-<form (ngSubmit)="submit()">
+  <form (ngSubmit)="submit()">
+    <label>Nome</label>
+    <input type="text" [(ngModel)]="person.nome" name="nome" required />
 
-  <label>
-    Nome:
-    <input
-      type="text"
-      name="nome"
-      [(ngModel)]="person.nome"
-      required
-    />
-  </label>
+    <label>Data de Nascimento</label>
+    <input type="date" [(ngModel)]="person.data_nascimento" name="data_nascimento" required />
 
-  <br /><br />
+    <label>CPF</label>
+    <input type="text" [(ngModel)]="person.cpf" name="cpf" required />
 
-  <label>
-    CPF:
-    <input
-      type="text"
-      name="cpf"
-      [(ngModel)]="person.cpf"
-      required
-    />
-  </label>
+    <label>Sexo</label>
+    <select [(ngModel)]="person.sexo" name="sexo">
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+    </select>
 
-  <br /><br />
+    <label>Altura (cm)</label>
+    <input type="number" [(ngModel)]="person.altura" name="altura" required />
 
-  <label>
-    Data de nascimento:
-    <input
-      type="date"
-      name="data_nascimento"
-      [(ngModel)]="person.data_nascimento"
-    />
-  </label>
+    <label>Peso (kg)</label>
+    <input type="number" [(ngModel)]="person.peso" name="peso" required />
 
-  <br /><br />
-
-  <label>
-    Altura (m):
-    <input
-      type="number"
-      name="altura"
-      [(ngModel)]="person.altura"
-      step="0.01"
-    />
-  </label>
-
-  <br /><br />
-
-  <label>
-    Peso (kg):
-    <input
-      type="number"
-      name="peso"
-      [(ngModel)]="person.peso"
-      step="0.1"
-    />
-  </label>
-
-  <br /><br />
-
-  <button type="submit">Salvar</button>
-
-</form>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">{{ id ? 'Atualizar' : 'Cadastrar' }}</button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
