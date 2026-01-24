@@ -1,22 +1,22 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { PersonService } from '../../services/person.service';
 import { Person } from '../../models/person.model';
-import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
-  templateUrl: './person-list.html',  
+  templateUrl: './person-list.html',
   styleUrls: ['./person-list.css']
 })
 export class PersonList implements OnInit {
 
   people: Person[] = [];
-  allPeople: Person[] = [];
-  searchTerm: string = ''; 
+  filteredPeople: Person[] = [];
+  searchTerm: string = '';
 
   constructor(
     private personService: PersonService,
@@ -29,17 +29,19 @@ export class PersonList implements OnInit {
 
   load() {
     this.personService.list().subscribe(data => {
-      console.log('DATA:', data, Array.isArray(data)); 
       this.people = data;
-      this.allPeople = data;
+      this.filteredPeople = [...data]; // populando filteredPeople
     });
   }
 
   search() {
     const term = this.searchTerm.toLowerCase();
-    this.people = this.allPeople.filter(p =>
+    this.filteredPeople = this.people.filter(p =>
       p.nome.toLowerCase().includes(term) ||
-      p.cpf.includes(term) 
+      p.cpf.includes(term) ||
+      p.sexo.toLowerCase().includes(term) ||
+      p.altura.toString().includes(term) ||
+      p.peso.toString().includes(term)
     );
   }
 

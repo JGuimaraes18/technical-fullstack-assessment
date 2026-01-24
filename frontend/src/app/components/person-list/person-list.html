@@ -1,59 +1,60 @@
-     
-<div class="page">
-  <div class="header">
-    <h2>Controle de Pessoal</h2>
-    <a routerLink="/novo">
-      <button class="btn-primary">Novo Registro</button>
-    </a>
+<ng-container>   
+  <div class="page">
+    <div class="header">
+      <h2>Controle de Pessoal</h2>
+      <a routerLink="/novo">
+        <button class="btn-primary">Novo Registro</button>
+      </a>
+    </div>
+
+    <div class="search-container">
+      <label for="search" class="search-label">Pesquisar:</label>
+      <input
+        id="search"
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="search()"
+        placeholder="Digite nome ou CPF"
+        class="search-input"
+      >
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Nascimento</th>
+          <th>Altura (m)</th>
+          <th>Peso (kg)</th>
+          <th>Sexo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of filteredPeople">
+          <td>{{ p.nome }}</td>
+          <td>{{ p.cpf }}</td>
+          <td>{{ p.data_nascimento }}</td>
+          <td>{{ p.altura }}</td>
+          <td>{{ p.peso }}</td>
+          <td>{{ p.sexo }}</td>
+          <td class="actions">
+            <button class="btn-info" (click)="showIdealWeight(p.id!)">
+              Peso ideal
+            </button>
+
+            <button class="btn-warning" (click)="edit(p.id!)">
+              Editar
+            </button>
+
+            <button class="btn-danger" (click)="delete(p.id!)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <div class="search-container">
-    <label for="search" class="search-label">Pesquisar:</label>
-    <input
-      id="search"
-      type="text"
-      [(ngModel)]="searchTerm"
-      (input)="search()"
-      placeholder="Digite nome ou CPF"
-      class="search-input"
-    >
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>CPF</th>
-        <th>Nascimento</th>
-        <th>Altura (m)</th>
-        <th>Peso (kg)</th>
-        <th>Sexo</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let p of people">
-        <td>{{ p.nome }}</td>
-        <td>{{ p.cpf }}</td>
-        <td>{{ p.data_nascimento }}</td>
-        <td>{{ p.altura }}</td>
-        <td>{{ p.peso }}</td>
-        <td>{{ p.sexo }}</td>
-        <td class="actions">
-          <button class="btn-info" (click)="showIdealWeight(p.id!)">
-            Peso ideal
-          </button>
-
-          <button class="btn-warning" (click)="edit(p.id!)">
-            Editar
-          </button>
-
-          <button class="btn-danger" (click)="delete(p.id!)">
-            Excluir
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+</ng-container>

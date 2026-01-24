@@ -10,7 +10,7 @@ import { Person } from '../../models/person.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './person-form.html',
-  styleUrl: './person-form.css'
+  styleUrls: ['./person-form.css']
 })
 export class PersonForm {
 
