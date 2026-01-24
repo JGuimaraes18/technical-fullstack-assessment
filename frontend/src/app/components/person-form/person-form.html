@@ -1,0 +1,66 @@
+<h2>Nova Pessoa</h2>
+
+<form (ngSubmit)="submit()">
+
+  <label>
+    Nome:
+    <input
+      type="text"
+      name="nome"
+      [(ngModel)]="person.nome"
+      required
+    />
+  </label>
+
+  <br /><br />
+
+  <label>
+    CPF:
+    <input
+      type="text"
+      name="cpf"
+      [(ngModel)]="person.cpf"
+      required
+    />
+  </label>
+
+  <br /><br />
+
+  <label>
+    Data de nascimento:
+    <input
+      type="date"
+      name="data_nascimento"
+      [(ngModel)]="person.data_nascimento"
+    />
+  </label>
+
+  <br /><br />
+
+  <label>
+    Altura (m):
+    <input
+      type="number"
+      name="altura"
+      [(ngModel)]="person.altura"
+      step="0.01"
+    />
+  </label>
+
+  <br /><br />
+
+  <label>
+    Peso (kg):
+    <input
+      type="number"
+      name="peso"
+      [(ngModel)]="person.peso"
+      step="0.1"
+    />
+  </label>
+
+  <br /><br />
+
+  <button type="submit">Salvar</button>
+
+</form>

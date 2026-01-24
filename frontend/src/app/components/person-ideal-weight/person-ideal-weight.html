@@ -1,0 +1,15 @@
+<h2>Peso Ideal</h2>
+
+<div *ngIf="loading">
+  Calculando peso ideal...
+</div>
+
+<div *ngIf="error">
+  <p style="color: red">{{ error }}</p>
+</div>
+
+<div *ngIf="pesoIdeal !== null">
+  <p><strong>Peso ideal:</strong> {{ pesoIdeal }} kg</p>
+</div>
+
+<button (click)="back()">Voltar</button>
