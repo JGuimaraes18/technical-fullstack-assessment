@@ -39,8 +39,8 @@ services:
       - ./frontend:/app
     ports:
       - "${FRONTEND_PORT}:4200"
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
 
 volumes:
   postgres_data:
