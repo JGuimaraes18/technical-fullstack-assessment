@@ -68,6 +68,6 @@ export class PersonForm {
     setTimeout(() => {
       this.showSuccess = false;
       this.router.navigate(['/']);
-    }, 3000); // some após 3 segundos
+    }, 5000);
   }
 }
