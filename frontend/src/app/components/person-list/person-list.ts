@@ -17,6 +17,12 @@ export class PersonList implements OnInit {
   people = signal<Person[]>([]);
   searchTerm = signal('');
 
+  showConfirm = signal(false);
+  deleteId: number | null = null;
+
+  alertMessage = signal('');
+  showAlert = signal(false);
+
   filteredPeople = computed(() => {
     const term = this.searchTerm().toLowerCase();
 
@@ -41,15 +47,21 @@ export class PersonList implements OnInit {
 
   load() {
     this.personService.list().subscribe(data => {
-      console.log('DADOS:', data);
       this.people.set(data);
     });
   }
 
+  displayAlert(msg: string) {
+    this.alertMessage.set(msg);
+    this.showAlert.set(true);
+
+    setTimeout(() => this.showAlert.set(false), 5000); 
+  }
+
   showIdealWeight(id: number) {
     this.personService.getIdealWeight(id).subscribe({
-      next: (res) => alert(`Peso ideal: ${res.peso_ideal} kg`),
-      error: () => alert('Erro ao calcular peso ideal')
+      next: (res) => this.displayAlert(`Peso ideal: ${res.peso_ideal} kg`),
+      error: () => this.displayAlert('Erro ao calcular peso ideal')
     });
   }
 
@@ -58,21 +70,31 @@ export class PersonList implements OnInit {
   }
 
   delete(id: number) {
-    if (confirm('Deseja excluir?')) {
-      this.personService.delete(id).subscribe(() => this.load());
+    this.deleteId = id;
+    this.showConfirm.set(true);
+  }
+
+  confirmDelete() {
+    if (this.deleteId != null) {
+      this.personService.delete(this.deleteId).subscribe(() => {
+        this.load();
+        this.displayAlert('Registro excluído com sucesso!');
+        this.showConfirm.set(false);
+      });
     }
   }
 
+  cancelDelete() {
+    this.showConfirm.set(false);
+    this.deleteId = null;
+  }
+
+  
+
   formatCpf(cpf: string): string {
     if (!cpf) return '';
-
     const digits = cpf.replace(/\D/g, '');
-
     if (digits.length !== 11) return cpf;
-
-    return digits.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{2})/,
-      '$1.$2.$3-$4'
-    );
+    return digits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 }
