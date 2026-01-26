@@ -14,11 +14,9 @@ import { Person } from '../../models/person.model';
 })
 export class PersonList implements OnInit {
 
-  // 🔹 estado reativo
   people = signal<Person[]>([]);
   searchTerm = signal('');
 
-  // 🔹 lista filtrada (reativa)
   filteredPeople = computed(() => {
     const term = this.searchTerm().toLowerCase();
 
@@ -44,7 +42,7 @@ export class PersonList implements OnInit {
   load() {
     this.personService.list().subscribe(data => {
       console.log('DADOS:', data);
-      this.people.set(data); // 👈 dispara render automaticamente
+      this.people.set(data);
     });
   }
 
