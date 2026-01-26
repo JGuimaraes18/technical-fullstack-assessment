@@ -17,31 +17,27 @@
 .header h2 {
   margin: 0;
   color: #333;
-    font-size: 1.4rem;
-}
-
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .header button {
-    width: 100%;
-  }
+  font-size: 1.4rem;
 }
 
 button {
-  padding: 6px 12px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 button:hover {
   opacity: 0.9;
+}
+
+button:focus-visible,
+.search-input:focus-visible {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
 }
 
 .btn-primary {
@@ -50,12 +46,12 @@ button:hover {
 }
 
 .btn-info {
-  background-color: #0288d1;
+    background-color: #1976d2;
   color: white;
 }
 
 .btn-warning {
-  background-color: #f9a825;
+  background-color: #ed6c02;
   color: white;
 }
 
@@ -76,7 +72,19 @@ table {
 }
 
 thead {
-  background-color: #f5f5f5;
+  background-color: #f0f2f5;
+}
+
+th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+}
+
+td {
+  font-size: 0.95rem;
+  color: #333;
 }
 
 th, td {
@@ -89,9 +97,19 @@ tr:hover {
   background-color: #fafafa;
 }
 
+tbody tr:hover {
+  background-color: #f9fafb;
+  transform: scale(1.002);
+}
+
 .actions {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;  
+}
+
+.actions button {
+  white-space: nowrap;
 }
 
 .search-container {
@@ -116,11 +134,16 @@ tr:hover {
   width: 250px;
   transition: all 0.2s ease-in-out;
   font-size: 0.95rem;
+  background-color: #fafafa;
 }
 
 .search-input:focus {
   border-color: #007bff; 
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.search-input::placeholder {
+  color: #6e6e6e;
 }
 
 @media (max-width: 600px) {
@@ -132,12 +155,27 @@ tr:hover {
   .search-input {
     width: 100%;
   }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header button {
+    width: 100%;
+  }
 }
 
-
 @media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
     display: block;
+    width: auto;
   }
 
   thead {
@@ -145,11 +183,17 @@ tr:hover {
   }
 
   tr {
-    background: #fff;
+    background: #ffffff;
     margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+
+  tr:hover {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
   }
 
   td {
@@ -157,34 +201,55 @@ tr:hover {
     padding: 6px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.95rem;
+    color: #5a5959;
   }
 
   td::before {
     font-weight: 600;
-    color: #555;
+    font-size: 0.85rem;
+    color: #494848;
+    letter-spacing: 0.06em;
   }
 
   td:nth-of-type(1)::before { content: "Nome"; }
   td:nth-of-type(2)::before { content: "CPF"; }
   td:nth-of-type(3)::before { content: "Nascimento"; }
-  td:nth-of-type(4)::before { content: "Altura"; }
-  td:nth-of-type(5)::before { content: "Peso"; }
+  td:nth-of-type(4)::before { content: "Altura (cm)"; }
+  td:nth-of-type(5)::before { content: "Peso (Kg)"; }
   td:nth-of-type(6)::before { content: "Sexo"; }
-  td:nth-of-type(7)::before { content: "Ações"; }
-
+  
   .actions {
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;    
     gap: 8px;
     margin-top: 8px;
   }
 
   .actions button {
+    flex: 1 1 auto;        
+    min-width: 90px;       
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header button {
     width: 100%;
   }
 
-  .search-input {
-    width: auto;
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
   }
-}
 
+  .search-input {
+    width: 250px;
+  }

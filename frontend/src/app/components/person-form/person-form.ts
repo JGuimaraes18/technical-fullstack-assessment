@@ -42,7 +42,6 @@ export class PersonForm {
   }
 
   submit() {
-    // Remove caracteres não numéricos do CPF
     this.person.cpf = this.person.cpf.replace(/\D/g, '');
     
     if (this.id) {
