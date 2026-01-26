@@ -25,6 +25,9 @@ export class PersonForm {
 
   id?: number;
 
+  showSuccess = false;
+  successMessage = '';
+
   constructor(
     private personService: PersonService,
     private router: Router,
@@ -33,7 +36,6 @@ export class PersonForm {
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
     if (this.id) {
       this.personService.getById(this.id).subscribe(person => {
         this.person = person;
@@ -43,21 +45,29 @@ export class PersonForm {
 
   submit() {
     this.person.cpf = this.person.cpf.replace(/\D/g, '');
-    
+
     if (this.id) {
       this.personService.update(this.id, this.person).subscribe(() => {
-        alert('Pessoa atualizada!');
-        this.router.navigate(['/']);
+        this.showSuccessModal('Pessoa atualizada com sucesso!');
       });
     } else {
       this.personService.create(this.person).subscribe(() => {
-        alert('Pessoa cadastrada!');
-        this.router.navigate(['/']);
+        this.showSuccessModal('Pessoa cadastrada com sucesso!');
       });
     }
   }
 
   cancel() {
     this.router.navigate(['/']);
+  }
+
+  showSuccessModal(msg: string) {
+    this.successMessage = msg;
+    this.showSuccess = true;
+
+    setTimeout(() => {
+      this.showSuccess = false;
+      this.router.navigate(['/']);
+    }, 3000); // some após 3 segundos
   }
 }

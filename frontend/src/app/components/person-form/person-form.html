@@ -31,3 +31,9 @@
     </div>
   </form>
 </div>
+
+<div *ngIf="showSuccess" class="success-modal-backdrop">
+  <div class="success-modal">
+    <p>{{ successMessage }}</p>
+  </div>
+</div>
