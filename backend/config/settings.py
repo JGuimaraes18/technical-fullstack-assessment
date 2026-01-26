@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from dotenv import load_dotenv
 from pathlib import Path
+from corsheaders.defaults import default_headers
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-ohg-&a+0hssy7dy0vezk8=i)50sum7j9_^*%c8tkn)tur4hb7h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'personal_data'),
         'USER': os.getenv('POSTGRES_USER', 'user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'userpassword'),
-        'HOST': '127.0.0.1',  
+        'HOST': 'db',  
         # 'HOST': os.getenv('POSTGRES_HOST', 'db_postgres'),
         'PORT': os.getenv('POSTGRES_PORT', 5432),
     }
@@ -110,7 +110,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://localhost:3000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:4200",
+    "http://localhost:3000",
+]
 
 CORS_ALLOW_METHODS = [
     "GET",
@@ -119,6 +128,11 @@ CORS_ALLOW_METHODS = [
     "PATCH",
     "DELETE",
     "OPTIONS",
+]
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "content-type",
 ]
 
 REST_FRAMEWORK = {
