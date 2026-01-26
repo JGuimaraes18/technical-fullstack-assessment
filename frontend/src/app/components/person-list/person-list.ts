@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,9 +14,23 @@ import { Person } from '../../models/person.model';
 })
 export class PersonList implements OnInit {
 
-  people: Person[] = [];
-  filteredPeople: Person[] = [];
-  searchTerm: string = '';
+  // 🔹 estado reativo
+  people = signal<Person[]>([]);
+  searchTerm = signal('');
+
+  // 🔹 lista filtrada (reativa)
+  filteredPeople = computed(() => {
+    const term = this.searchTerm().toLowerCase();
+
+    return this.people().filter(p =>
+      !term ||
+      p.nome.toLowerCase().includes(term) ||
+      p.cpf.includes(term) ||
+      p.sexo.toLowerCase().includes(term) ||
+      p.altura.toString().includes(term) ||
+      p.peso.toString().includes(term)
+    );
+  });
 
   constructor(
     private personService: PersonService,
@@ -29,20 +43,9 @@ export class PersonList implements OnInit {
 
   load() {
     this.personService.list().subscribe(data => {
-      this.people = data;
-      this.filteredPeople = [...data]; // populando filteredPeople
+      console.log('DADOS:', data);
+      this.people.set(data); // 👈 dispara render automaticamente
     });
-  }
-
-  search() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredPeople = this.people.filter(p =>
-      p.nome.toLowerCase().includes(term) ||
-      p.cpf.includes(term) ||
-      p.sexo.toLowerCase().includes(term) ||
-      p.altura.toString().includes(term) ||
-      p.peso.toString().includes(term)
-    );
   }
 
   showIdealWeight(id: number) {
